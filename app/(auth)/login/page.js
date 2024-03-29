@@ -1,9 +1,15 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 const page = () => {
+  const google = () => {
+    window.open("http://localhost:4000/auth/google", "_self");
+  };
+
   return (
     <main className="flex flex-center h-screen flex-col">
       <Image
@@ -12,7 +18,7 @@ const page = () => {
         height={10}
         className="mb-3"
       ></Image>
-      <div className="border border-secondary-200 bg-gray-900 padding-container py-5 rounded-lg">
+      <div className="border border-secondary-200 bg-gray-900 px-5 py-5 rounded-lg">
         <h1 className="font-semibold mb-5 text-center">Continue with</h1>
         {/* local */}
         <form
@@ -37,7 +43,7 @@ const page = () => {
             </Button>
           </Link>
           {/* google */}
-          <Link href="#">
+          <div onClick={google}>
             <Button className="w-[300px] flex gap-3">
               <Image
                 src="/google_logo.svg"
@@ -47,7 +53,7 @@ const page = () => {
               ></Image>
               <span>Continue with Google</span>
             </Button>
-          </Link>
+          </div>
         </div>
       </div>
     </main>

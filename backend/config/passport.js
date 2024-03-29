@@ -1,3 +1,4 @@
+const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const { OAuth2Strategy: GoogleStrategy } = require("passport-google-oauth");
 const mongoose = require("mongoose");
@@ -46,65 +47,47 @@ passport.use(
 /**
  * Sign in with Google.
  */
+
 const googleStrategyConfig = new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_ID,
     clientSecret: process.env.GOOGLE_SECRET,
-    callbackURL: "http://localhost:4000/auth/google/callback",
+    callbackURL: "/auth/google/redirect",
     passReqToCallback: true,
   },
-  async (req, accessToken, refreshToken, params, profile, done) => {
+  async (req, accessToken, refreshToken, profile, done) => {
     try {
+      // Check if there's a user logged in
       if (req.user) {
-        const existingUser = await User.findOne({ google: profile.id });
-        if (existingUser && existingUser.id !== req.user.id) {
-          req.flash("errors", {
-            msg: "There is already a Google account that belongs to you. Sign in with that account or delete it, then link it with your current account.",
-          });
-          return done(null, existingUser);
-        }
-        const user = await User.findById(req.user.id);
-        user.google = profile.id;
-        user.tokens.push({
-          kind: "google",
-          accessToken,
-          accessTokenExpires: moment()
-            .add(params.expires_in, "seconds")
-            .format(),
-          refreshToken,
-        });
-        user.profile.name = user.profile.name || profile.displayName;
-        user.profile.gender = user.profile.gender || profile._json.gender;
-        user.profile.picture = user.profile.picture || profile._json.picture;
-        await user.save();
+        // Linking Google account to existing user
+        req.user.google = profile.id;
+        await req.user.save();
         req.flash("info", { msg: "Google account has been linked." });
-        return done(null, user);
+        return done(null, req.user);
       }
-      const existingUser = await User.findOne({ google: profile.id });
-      if (existingUser) {
-        return done(null, existingUser);
-      }
+
+      // Find if the user with this Google ID exists
+      let user = await User.findOne({ google: profile.id });
+
+      // If user exists, return user
+      if (user) return done(null, user);
+
+      // If user doesn't exist, check if there's another user with the same email
       const existingEmailUser = await User.findOne({
         email: profile.emails[0].value,
       });
+
       if (existingEmailUser) {
         req.flash("errors", {
           msg: "There is already an account using this email address. Sign in to that account and link it with Google manually from Account Settings.",
         });
         return done(null, existingEmailUser);
       }
-      const user = new User();
+
+      // Create a new user if no user with this Google ID or email exists
+      user = new User();
       user.email = profile.emails[0].value;
       user.google = profile.id;
-      user.tokens.push({
-        kind: "google",
-        accessToken,
-        accessTokenExpires: moment().add(params.expires_in, "seconds").format(),
-        refreshToken,
-      });
-      user.profile.name = profile.displayName;
-      user.profile.gender = profile._json.gender;
-      user.profile.picture = profile._json.picture;
       await user.save();
       return done(null, user);
     } catch (err) {
@@ -112,5 +95,13 @@ const googleStrategyConfig = new GoogleStrategy(
     }
   }
 );
+
 passport.use("google", googleStrategyConfig);
-refresh.use("google", googleStrategyConfig);
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
