@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button"
 import Link from 'next/link';
 import SearchBar from './SearchBar';
 import Hamburger from './Hamburger';
+import { UserButton } from "@clerk/nextjs";
+
+
 
 const navigation = [
   {
@@ -52,6 +55,7 @@ const Header = ({ style }) => {
           </Button>
         </Link>
 
+        <UserButton />
 
       </section>
       <section className='md:hidden sm:relative bg-dark-200/30 flex flex-center py-3'>

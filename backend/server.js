@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const connectDB = require("./config/database");
 const postRoutes = require("./routes/post");
 const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
 const logger = require("morgan");
 const passport = require("passport");
 const flash = require("flash");
@@ -12,18 +13,14 @@ require("dotenv").config({ path: "./config/.env" });
 
 // cors setup
 const cors = require("cors");
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    methods: "GET,POST,PUT,DELETE",
-    credentials: true,
-  })
-);
+app.use(cors());
 
 // Configure session middleware
 app.use(
   session({
     secret: "3percsthatsit",
+    name: "id",
+    domain: ".localhost",
     resave: false,
     saveUninitialized: true,
   })
@@ -44,6 +41,7 @@ app.use(express.json());
 // app.use("/", mainRoutes);
 app.use("/post", postRoutes);
 app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 // app.use("/service", commentRoutes);
 
 app.use(logger("dev"));

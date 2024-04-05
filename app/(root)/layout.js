@@ -1,5 +1,6 @@
 import "../globals.css";
 import Header from "@/components/Header";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata = {
   title: "prodmarket",
@@ -8,11 +9,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="font-inter relative">
-        <Header style="sticky" />
-        <main className="relative overflow-hidden">{children}</main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className="font-inter relative">
+          <Header style="sticky" />
+          <main className="relative overflow-hidden">{children}</main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

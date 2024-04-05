@@ -5,18 +5,6 @@ const mongoose = require("mongoose");
 
 const User = require("../models/user");
 
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    return done(null, await User.findById(id));
-  } catch (error) {
-    return done(error);
-  }
-});
-
 // local signin
 passport.use(
   new LocalStrategy({ usernameField: "email" }, (email, password, done) => {

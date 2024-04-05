@@ -1,4 +1,6 @@
 import Header from "@/components/Header";
+import { ClerkProvider } from "@clerk/nextjs";
+
 import "../globals.css";
 
 export const metadata = {
@@ -8,10 +10,12 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="font-inter relative">
-        <main className="relative overflow-hidden">{children}</main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className="font-inter relative">
+          <main className="relative overflow-hidden">{children}</main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
