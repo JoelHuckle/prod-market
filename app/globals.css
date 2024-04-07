@@ -42,7 +42,7 @@
   }
 
   .input{
-    @apply bg-transparent w-full border border-secondary-200 rounded-lg outline-none px-3 py-2 text-sm
+    @apply bg-dark-100 w-full border border-secondary-200 rounded-lg outline-none px-3 py-2 text-sm
   }
 
 }

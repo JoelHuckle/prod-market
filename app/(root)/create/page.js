@@ -74,116 +74,118 @@ const Create = () => {
         </h2>
       </div>
 
-      {/* Loop form */}
-      <form
-        action=""
-        className={`${
-          loopSelected ? "flex" : "hidden"
-        } flex-col text-primary text-sm lg:ml-[150px]`}
-      >
-        <div className="flex mb-4 gap-7">
-          {/* link */}
-          <div className="flex flex-col gap-1 w-1/2">
-            <label htmlFor="url" className="font-bold">
-              Link
-            </label>
+      <section>
+        {/* Loop form */}
+        <form
+          action=""
+          className={`${
+            loopSelected ? "flex" : "hidden"
+          } flex-col text-primary text-sm lg:ml-[150px]`}
+        >
+          <div className="flex mb-4 gap-7">
+            {/* link */}
+            <div className="flex flex-col gap-1 w-1/2">
+              <label htmlFor="url" className="font-bold">
+                Link
+              </label>
+              <input
+                type="text"
+                name="url"
+                placeholder="dropbox.com/..."
+                className=" input"
+              />
+            </div>
+            {/* preview */}
+            <div className="flex flex-col gap-1 w-1/2">
+              <label htmlFor="preview" className="font-bold ">
+                Preview
+              </label>
+              <input
+                type="file"
+                name="preview"
+                placeholder="dropbox.com/..."
+                className="py-11 input"
+              />
+            </div>
+          </div>
+          <div className="border rounded-lg border-secondary-200">
             <input
               type="text"
-              name="url"
-              placeholder="dropbox.com/..."
-              className=" input"
+              name="title"
+              className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm font-bold"
+              placeholder={`Loops ${date}`}
             />
-          </div>
-          {/* preview */}
-          <div className="flex flex-col gap-1 w-1/2">
-            <label htmlFor="preview" className="font-bold ">
-              Preview
-            </label>
-            <input
-              type="file"
-              name="preview"
-              placeholder="dropbox.com/..."
-              className="py-11 input"
-            />
-          </div>
-        </div>
-        <div className="border rounded-lg border-secondary-200">
-          <input
-            type="text"
-            name="title"
-            className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm font-bold"
-            placeholder={`Loops ${date}`}
-          />
-          <textarea
-            name="caption"
-            type="text"
-            className="bg-transparent w-full outline-none px-3 py-2 text-sm resize-none h-[120px]"
-            placeholder="Loops in the style of..."
-          />
-          <input
-            type="number"
-            name="price"
-            className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm"
-            placeholder="$ 0.00"
-          />
-        </div>
-        <Button className="mt-5 w-32">Submit</Button>
-      </form>
-
-      {/* Service form */}
-      <form
-        action=""
-        className={`${
-          loopSelected ? "hidden" : "flex"
-        } flex-col text-primary lg:ml-[150px]`}
-      >
-        <div className="flex mb-4 gap-7">
-          {/* link */}
-          <div className="flex flex-col gap-1 w-1/2">
-            <label htmlFor="" className="font-bold">
-              Link
-            </label>
-            <input
+            <textarea
+              name="caption"
               type="text"
-              name="url"
-              placeholder="dropbox.com/..."
-              className=" input"
+              className="bg-transparent w-full outline-none px-3 py-2 text-sm resize-none h-[120px]"
+              placeholder="Loops in the style of..."
             />
-          </div>
-          <div className="flex flex-col gap-1 w-1/2">
-            <label htmlFor="waitTime" className="font-bold ">
-              Max wait time (days)
-            </label>
             <input
               type="number"
-              name="waitTime"
-              placeholder="3"
-              className="py-11 input"
+              name="price"
+              className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm"
+              placeholder="$ 0.00"
             />
           </div>
-        </div>
-        <div className="border rounded-lg border-secondary-200">
-          <input
-            type="text"
-            name="title"
-            className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm font-bold"
-            placeholder={`Loops ${date}`}
-          />
-          <textarea
-            name="caption"
-            type="text"
-            className="bg-transparent w-full outline-none px-3 py-2 text-sm resize-none h-[120px]"
-            placeholder="Loops in the style of..."
-          />
-          <input
-            type="number"
-            name="price"
-            className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm"
-            placeholder="$ 0.00"
-          />
-        </div>
-        <Button className="mt-5 w-32">Submit</Button>
-      </form>
+          <Button className="mt-5 w-32">Submit</Button>
+        </form>
+
+        {/* Service form */}
+        <form
+          action=""
+          className={`${
+            loopSelected ? "hidden" : "flex"
+          } flex-col text-primary lg:ml-[150px]`}
+        >
+          <div className="flex mb-4 gap-7">
+            {/* link */}
+            <div className="flex flex-col gap-1 w-1/2">
+              <label htmlFor="" className="font-bold">
+                Link
+              </label>
+              <input
+                type="text"
+                name="url"
+                placeholder="dropbox.com/..."
+                className=" input"
+              />
+            </div>
+            <div className="flex flex-col gap-1 w-1/2">
+              <label htmlFor="waitTime" className="font-bold ">
+                Max wait time (days)
+              </label>
+              <input
+                type="number"
+                name="waitTime"
+                placeholder="3"
+                className="py-11 input"
+              />
+            </div>
+          </div>
+          <div className="border rounded-lg border-secondary-200">
+            <input
+              type="text"
+              name="title"
+              className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm font-bold"
+              placeholder={`Loops ${date}`}
+            />
+            <textarea
+              name="caption"
+              type="text"
+              className="bg-transparent w-full outline-none px-3 py-2 text-sm resize-none h-[120px]"
+              placeholder="Loops in the style of..."
+            />
+            <input
+              type="number"
+              name="price"
+              className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm"
+              placeholder="$ 0.00"
+            />
+          </div>
+          <Button className="mt-5 w-32">Submit</Button>
+        </form>
+      </section>
     </main>
   );
 };
