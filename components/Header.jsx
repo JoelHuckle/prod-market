@@ -49,13 +49,11 @@ const Header = ({ style }) => {
         ))}
       </div>
 
-        <Link href="/login">
+        <Link href="/sign-in">
           <Button className="text-primary bg-transparent hover:bg-dark-200 border border-primary">
             Login
           </Button>
         </Link>
-
-        <UserButton />
 
       </section>
       <section className='md:hidden sm:relative bg-dark-200/30 flex flex-center py-3'>

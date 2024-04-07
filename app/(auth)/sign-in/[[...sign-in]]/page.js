@@ -1,5 +1,6 @@
 import { SignIn } from "@clerk/nextjs";
 import Image from "next/image";
+import Skeleton from "react-loading-skeleton";
 
 const page = async () => {
   return (

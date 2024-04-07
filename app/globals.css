@@ -41,4 +41,8 @@
     @apply mx-auto max-w-[1440px];
   }
 
+  .input{
+    @apply bg-transparent w-full border border-secondary-200 rounded-lg outline-none px-3 py-2 text-sm
+  }
+
 }
