@@ -49,7 +49,7 @@ const Header = ({ style }) => {
         ))}
       </div>
 
-        <Link href="/sign-in">
+        <Link href="/log-in">
           <Button className="text-primary bg-transparent hover:bg-dark-200 border border-primary">
             Login
           </Button>
