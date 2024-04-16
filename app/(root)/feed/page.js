@@ -2,13 +2,13 @@ import Profile from "@/components/Profile";
 import Post from "@/components/Post";
 import Service from "@/components/Service";
 
-const feed = ({ name = "user" }) => {
+// server imports
+import PostModel from "@/lib/models/Post";
+import ServiceModel from "@/lib/models/Service";
+
+const feed = ({ data }) => {
   return (
     <main className="padding-container">
-      <div className="pt-5">
-        <h1 className="text-3xl font-semibold text-accent-100">{`Welcome ${name}.`}</h1>
-      </div>
-
       {/* FOLLOWING */}
       <section className="py-8">
         <h2 className="text-xl font-bold">Following</h2>

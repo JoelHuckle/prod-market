@@ -2,14 +2,14 @@
 //validation and server form imports
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // ui imports
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import Link from "next/link";
+
+//server actions
+import { createPost } from "@/lib/actions/post.action";
+import { createService } from "@/lib/actions/service.action";
 
 const formSchema = z.object({
   // username: z.string().min(2, {
@@ -20,30 +20,7 @@ const formSchema = z.object({
 const Create = () => {
   const [loopSelected, setLoopSelected] = useState(true);
 
-  // const onSubmit = async () => {
-  //   try {
-  //     const formData = form.getValues();
-  //     const res = await fetch("http://localhost:4000/post/createPost", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(formData),
-  //     });
-
-  //     if (!res.ok) {
-  //       throw new Error(`HTTP error! Status: ${res.status}`);
-  //     }
-  //     const resData = await res.json();
-  //     router.push("/profile/darko");
-
-  //     // Handle successful response here
-  //   } catch (error) {
-  //     console.error("There was a problem with the fetch operation:", error);
-  //     // Handle error here
-  //   }
-  // };
-
+  //date for placeholder values
   const nowDate = new Date();
   const date =
     nowDate.getDate() +
@@ -77,7 +54,7 @@ const Create = () => {
       <section>
         {/* Loop form */}
         <form
-          action=""
+          action={createPost}
           className={`${
             loopSelected ? "flex" : "hidden"
           } flex-col text-primary text-sm lg:ml-[150px]`}
@@ -93,6 +70,7 @@ const Create = () => {
                 name="url"
                 placeholder="dropbox.com/..."
                 className=" input"
+                required
               />
             </div>
             {/* preview */}
@@ -105,6 +83,7 @@ const Create = () => {
                 name="preview"
                 placeholder="dropbox.com/..."
                 className="py-11 input"
+                required
               />
             </div>
           </div>
@@ -114,53 +93,66 @@ const Create = () => {
               name="title"
               className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm font-bold"
               placeholder={`Loops ${date}`}
+              required
             />
             <textarea
               name="caption"
               type="text"
               className="bg-transparent w-full outline-none px-3 py-2 text-sm resize-none h-[120px]"
               placeholder="Loops in the style of..."
+              required
             />
-            <input
-              type="number"
-              name="price"
-              className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm"
-              placeholder="$ 0.00"
-            />
+            <div className="flex flex-center">
+              <p className="relative left-2 bottom-[0.7px]">$</p>
+              <input
+                type="number"
+                name="price"
+                className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm"
+                placeholder="0.00"
+                required
+              />
+            </div>
           </div>
           <Button className="mt-5 w-32">Submit</Button>
         </form>
 
         {/* Service form */}
         <form
-          action=""
+          action={createService}
           className={`${
             loopSelected ? "hidden" : "flex"
-          } flex-col text-primary lg:ml-[150px]`}
+          } flex-col text-primary text-sm lg:ml-[150px]`}
         >
           <div className="flex mb-4 gap-7">
             {/* link */}
             <div className="flex flex-col gap-1 w-1/2">
-              <label htmlFor="" className="font-bold">
-                Link
-              </label>
-              <input
-                type="text"
-                name="url"
-                placeholder="dropbox.com/..."
-                className=" input"
-              />
-            </div>
-            <div className="flex flex-col gap-1 w-1/2">
-              <label htmlFor="waitTime" className="font-bold ">
-                Max wait time (days)
+              <label htmlFor="waitTime" className="font-bold">
+                Max Wait Time (days)
               </label>
               <input
                 type="number"
+                step="1"
                 name="waitTime"
-                placeholder="3"
-                className="py-11 input"
+                placeholder="5"
+                className="input"
+                required
               />
+            </div>
+            {/* preview */}
+            <div className="flex flex-col gap-1 w-1/2">
+              <label htmlFor="type" className="font-bold ">
+                Type
+              </label>
+              <select
+                name="type"
+                id="type"
+                className="input"
+                required
+                defaultValue="Service"
+              >
+                <option value="collab">Collab</option>
+                <option value="loop-sub">Loop Subscription</option>
+              </select>
             </div>
           </div>
           <div className="border rounded-lg border-secondary-200">
@@ -169,19 +161,25 @@ const Create = () => {
               name="title"
               className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm font-bold"
               placeholder={`Loops ${date}`}
+              required
             />
             <textarea
               name="caption"
               type="text"
               className="bg-transparent w-full outline-none px-3 py-2 text-sm resize-none h-[120px]"
               placeholder="Loops in the style of..."
+              required
             />
-            <input
-              type="number"
-              name="price"
-              className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm"
-              placeholder="$ 0.00"
-            />
+            <div className="flex flex-center">
+              <p className="relative left-2 bottom-[0.7px]">$</p>
+              <input
+                type="number"
+                name="price"
+                className="bg-transparent w-full border-b border-secondary-200 outline-none px-3 py-2 text-sm"
+                placeholder="0.00"
+                required
+              />
+            </div>
           </div>
           <Button className="mt-5 w-32">Submit</Button>
         </form>
